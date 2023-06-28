@@ -13,12 +13,19 @@ form.addEventListener('submit', function (e) {
                return response.json();
           })
           .then(function(jsonresponse){
-               const liItem= document.createElement('li');
-               liItem.innerHTML = jsonresponse['description'];
+               const liItem = document.createElement('li');
+               const checkbox = document.createElement('input');
+               checkbox.className = 'check-completed';
+               checkbox.type = 'checkbox';
+               checkbox.setAttribute('data-id', jsonresponse.id);
+               liItem.appendChild(checkbox);
+               const text = document.createTextNode(' ' + jsonresponse.description)
+               // liItem.innerHTML = jsonresponse['description'];
                document.getElementById('todo').appendChild(liItem);
                document.getElementById('error').classname='hidden';
           })
           .catch(function() {
+          	console.error('Error occurred')
                document.getElementById('error').classname = '';
           })
 })
@@ -27,11 +34,18 @@ for (let i = 0; i < checkboxes.length; i++) {
 	const checkbox = checkboxes[i];
 	checkbox.onchange = function(e) {
 		console.log('event', e);
+		const todo_id = e.target.dataset['id']
 		const newCompleted = e.target.checked;
-		fetch('/todos/set-completed', {
+		fetch('/todos/' + todo_id + '/set-completed', {
 			headers: {'Content-Type': 'application/json'},
 			method: 'POST',
 			body: JSON.stringify({'completed' : newCompleted})})
+		.then(function() {
+			document.getElementById('error').className = 'hidden';
+		})
+		.catch(function() {
+			document.getElementById('error').className = '';
+		})
 	}
 }
 

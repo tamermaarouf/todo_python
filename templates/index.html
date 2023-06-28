@@ -10,7 +10,9 @@
 		</form>
 		<ul id="todo">
 			{% for d in data %}
-			<li><input class='check-completed' type = "checkbox" {% if d.completed %} cehecked {% endif %} />{{ d.description }}</li>
+			<li>
+				<input class='check-completed' data-id={{ d.id }} type = "checkbox" {% if d.completed %} checked {% endif %} />{{ d.description }}
+			</li>
 			{% endfor %}
 		</ul>
 		<div class="hidden" id="error">Something went wrong!</div>
