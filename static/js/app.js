@@ -22,6 +22,18 @@ form.addEventListener('submit', function (e) {
                document.getElementById('error').classname = '';
           })
 })
+const checkboxes = document.querySelectorAll('.check-completed');
+for (let i = 0; i < checkboxes.length; i++) {
+	const checkbox = checkboxes[i];
+	checkbox.onchange = function(e) {
+		console.log('event', e);
+		const newCompleted = e.target.checked;
+		fetch('/todos/set-completed', {
+			headers: {'Content-Type': 'application/json'},
+			method: 'POST',
+			body: JSON.stringify({'completed' : newCompleted})})
+	}
+}
 
 // document.getElementById('form'.onsubmit = function (e) {
 //    e.preventDefaut();
