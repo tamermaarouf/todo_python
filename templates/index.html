@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>Todo App</title>
+		<link rel="stylesheet" href="../static/css/style.css">
+	</head>
+	<body>
+		<form id="form">
+			<input type="text" name="description" id="description">
+			<input type="submit" value="Create">
+		</form>
+		<ul id="todo">
+			{% for d in data %}
+			<li><input type = "checkbox" {% if d.completed %} cehecked {% endif %} />{{ d.description }}</li>
+			{% endfor %}
+		</ul>
+		<div class="hidden" id="error">Something went wrong!</div>
+		<script src="../static/js/app.js"></script>
+	</body>
+</html>
